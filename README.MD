@@ -6,7 +6,7 @@ For an illustration of our method see file src/modules/models/confu.py
 
 
 ## data proposed structure
-
+```
 src/
 data/
 └── avmnist
@@ -55,7 +55,7 @@ data/
     │   ├── ..
     ├── vb100_taxonomy
     │   ├── ..
-
+```
 
 
 
