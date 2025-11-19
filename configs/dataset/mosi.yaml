@@ -1,0 +1,13 @@
+# config/dataset/mosi.yaml
+train_dataset: mosi
+pickle_name: mosi_data.pkl
+embedding:
+  # input_dim1: 20
+  # input_dim2: 5
+  # input_dim3: 300
+  input_dim1: 20
+  input_dim2: 5
+  input_dim3: 300
+  transformer_hid_dim: 300
+
+  common_dim: 0

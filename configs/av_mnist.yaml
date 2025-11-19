@@ -1,0 +1,5 @@
+results_path: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/results/av_mnist
+data_path: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/avmnist
+embed_dim: 256
+batch_size: 512
+max_epochs: 30

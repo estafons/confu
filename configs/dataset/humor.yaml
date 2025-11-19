@@ -1,0 +1,11 @@
+# config/dataset/humor.yaml
+train_dataset: humor
+pickle_name: humor.pkl
+embedding:
+  input_dim1: 371
+  input_dim2: 81
+  input_dim3: 300
+  transformer_hid_dim: 300
+
+  common_dim: 0
+  

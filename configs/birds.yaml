@@ -1,0 +1,27 @@
+results_path: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/results/birds
+embed_dim: 512
+batch_size: 64
+max_epochs: 100
+audio_csv: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/ssw60/audio_ml.csv
+species_csv: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/birds_mml_csvs/taxa_ssw60_vb100_all.csv
+audio_dir: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/ssw60/audio_ml/
+train_csv: ${oc.env:HOME}/Projects/Personal/ssw60_captions_dataset/ssw60_captions/birds_mml_csvs/merged_with_generated_captions.csv
+ssw60_videos_csv: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/ssw60/video_ml.csv
+ssw60_taxa_csv: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/ssw60/taxa.csv
+ssw60_video_dir: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/ssw60/video_ml/
+vb100_train_csv: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/vb100/vb100_annotations_v1/train_video.txt
+vb100_test_csv: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/vb100/vb100_annotations_v1/test_video.txt
+vb100_videos_dir: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/vb100/vb100_all_videos
+cub_root_dir: ${oc.env:HOME}/Projects/Personal/contrastive_fusion/contrastive_fusion/data/CUB_200_2011/CUB_200_2011/images
+
+confu_chkpt_path: ${oc.env:HOME}/Projects/Personal/fusion-clip/fusion-clip/checkpoints_good/checkpoint-epoch=99-step=233900.ckpt
+
+image_sources:
+  - [
+      "${oc.env:HOME}/Projects/Personal/ssw60_captions_dataset/ssw60_captions/data_ssw60/ssw60/images_inat.csv",
+      "${oc.env:HOME}/Projects/Personal/ssw60_captions_dataset/ssw60_captions/data_ssw60/ssw60/images_inat/"
+    ]
+  - [
+      "${oc.env:HOME}/Projects/Personal/ssw60_captions_dataset/ssw60_captions/data_ssw60/ssw60/images_nabirds.csv",
+      "${oc.env:HOME}/Projects/Personal/ssw60_captions_dataset/ssw60_captions/data_ssw60/ssw60/images_nabirds/"
+    ]

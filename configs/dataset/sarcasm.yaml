@@ -1,0 +1,10 @@
+# config/dataset/sarcasm.yaml
+train_dataset: sarcasm
+pickle_name: sarcasm.pkl
+embedding:
+  input_dim1: 371
+  input_dim2: 81
+  input_dim3: 300
+  transformer_hid_dim: 300
+
+  common_dim: 0

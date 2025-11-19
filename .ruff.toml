@@ -1,0 +1,8 @@
+[lint]
+# Enable linting Rules. See: https://bookstack.scify.org/books/guides-howtos/page/description-notes-on-ruff-linting-rules
+select = ["E", "F", "UP", "S", "C90", "N", "BLE", "A", "T20", "RET", "SIM"]
+
+# Ignore `E402` (import violations) in all `__init__.py` files, and in select subdirectories.
+[lint.per-file-ignores]
+"__init__.py" = ["E402"]
+"**/{tests,docs,tools}/*" = ["S"]
