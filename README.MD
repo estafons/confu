@@ -1,11 +1,19 @@
 # ConFu Instructions
 
-## Illustration of method
+## Prerequisites
 
-For an illustration of our method see file src/modules/models/confu.py
+1. conda (or other package manager)
+2. install requirements (environment.yaml)
+```
+conda env create -f environment.yaml
+```
+3. activate environment
+```
+conda activate contrastive_fusion
+```
+4. Run experiments!
 
-
-## data proposed structure
+### data proposed folder structure
 ```
 src/
 data/
@@ -58,8 +66,9 @@ data/
 ```
 
 
+## Experiments
 
-## Running MULTIBENCH experiments
+### MULTIBENCH
 
 Each experiment was repeated for **5 runs**, and the **mean** and **standard deviation** were computed.
 
@@ -77,7 +86,7 @@ bash scripts/multibench.sh
 ```
 
 
-## Running AV-MNIST experiments
+## AV-MNIST
 
 Experiments were repeated for **5 runs**, and the **mean** and **standard deviation** were computed.
 
@@ -89,9 +98,9 @@ Experiments were repeated for **5 runs**, and the **mean** and **standard deviat
    bash scripts/av_mnist.sh
     ```
 
-## Running Birds-MML experiments
+## SSW60, VB100, CUB200
 
-Training from scratch requires approximately **1–2 days** on a single GPU.
+**NOTE**: Training from scratch requires approximately **1–2 days** on a single GPU.
 
 1. **Install the required dependencies.**
 2. **Download the evaluation datasets:**  
@@ -106,3 +115,122 @@ Training from scratch requires approximately **1–2 days** on a single GPU.
    bash scripts/birds_few_shot.sh
    ```
 
+
+
+## Example code - illustration of method
+
+```python
+
+class ConFu(pl.LightningModule):
+    """
+    Minimal illustration of the ConFu architecture.
+
+    Key ideas:
+    - Three encoded modalities: M1, M2, M3.
+    - Three injected fusion modules: fusion12, fusion13, fusion23.
+      (Each receives concatenated embeddings from two modalities.)
+    - Encoders and fusion modules can be ANY nn.Module as long as their
+      input/output dimensions align.
+    - InfoNCE is used to compute contrastive losses between:
+        (a) single-modality embeddings
+        (b) fused embeddings and the remaining modality
+    """
+
+    def __init__(
+        self,
+        encoder1,               # encoder for modality 1
+        encoder2,               # encoder for modality 2
+        encoder3,               # encoder for modality 3
+        fusion12,               # fusion module for (1,2)
+        fusion13,               # fusion module for (1,3)
+        fusion23,               # fusion module for (2,3)
+        embed_dim=128,          # shared embedding dimension
+    ):
+        super().__init__()
+
+        # --------------------------------------------------------------
+        # Encoders (injected)
+        # --------------------------------------------------------------
+        self.encoder1 = encoder1
+        self.encoder2 = encoder2
+        self.encoder3 = encoder3
+
+        # --------------------------------------------------------------
+        # Fusion modules (injected)
+        # Each fusion module computes:
+        #    fused_ij = f_ij([e_i || e_j])
+        # --------------------------------------------------------------
+        self.fusion12 = fusion12
+        self.fusion13 = fusion13
+        self.fusion23 = fusion23
+
+        # --------------------------------------------------------------
+        # Projection into shared embedding space
+        # --------------------------------------------------------------
+        self.proj1 = nn.Linear(encoder1.output_dim, embed_dim)
+        self.proj2 = nn.Linear(encoder2.output_dim, embed_dim)
+        self.proj3 = nn.Linear(encoder3.output_dim, embed_dim)
+
+    def forward(self, x1, x2, x3):
+        """
+        1. Encode each modality separately.
+        2. Project each into a shared embedding space.
+        3. Concatenate pairs and pass them through the corresponding fusion module.
+
+        Returns:
+            z12, z13, z23  : fused embeddings
+            z1, z2, z3     : single-modality projected embeddings
+        """
+
+        # ------------------------
+        # Encode modalities
+        # ------------------------
+        e1 = self.encoder1(x1)
+        e2 = self.encoder2(x2)
+        e3 = self.encoder3(x3)
+
+        # ------------------------
+        # Project to shared space
+        # ------------------------
+        z1 = F.normalize(self.proj1(e1), dim=-1)
+        z2 = F.normalize(self.proj2(e2), dim=-1)
+        z3 = F.normalize(self.proj3(e3), dim=-1)
+
+        # ------------------------
+        # Fused representations
+        # Each fusion block receives a concatenation of two encodings
+        # ------------------------
+        z12 = F.normalize(self.fusion12(torch.cat([e1, e2], dim=-1)), dim=-1)
+        z13 = F.normalize(self.fusion13(torch.cat([e1, e3], dim=-1)), dim=-1)
+        z23 = F.normalize(self.fusion23(torch.cat([e2, e3], dim=-1)), dim=-1)
+
+        return z12, z13, z23, z1, z2, z3
+
+    def training_step(self, batch, batch_idx):
+        """
+        Minimal example of how losses are computed.
+        Actual training logic is intentionally simplified.
+        """
+        x1, x2, x3 = batch
+
+        z12, z13, z23, z1, z2, z3 = self(x1, x2, x3)
+
+        # ------------------------
+        # Single-modality losses
+        # ------------------------
+        l12 = infonce(z1, z2)
+        l23 = infonce(z2, z3)
+        l31 = infonce(z3, z1)
+
+        # ------------------------
+        # Fusion-to-modality losses
+        # ------------------------
+        lf12 = infonce(z12, z3)
+        lf13 = infonce(z13, z2)
+        lf23 = infonce(z23, z1)
+
+        # Simple uniform average
+        loss = (l12 + l23 + l31 + lf12 + lf13 + lf23) / 6
+
+        return loss
+```
