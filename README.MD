@@ -1,9 +1,9 @@
-# ConFu: Contrastive Fusion for Higher-Order Multimodal Alignment
+# The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment [CVPR 2026]
+
 <p align="center">
   <img src="assets/concept_image.png" width="600">
 </p>
-**The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment**  
-Accepted at **CVPR 2026**
+
 
 📄 Paper: https://arxiv.org/abs/2511.21331  
 🌐 Project Page: https://estafons.github.io/confu/  
