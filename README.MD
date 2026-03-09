@@ -1,4 +1,25 @@
-# ConFu Instructions
+# ConFu: Contrastive Fusion for Higher-Order Multimodal Alignment
+![Concept](assets/concept_image.png)
+**The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment**  
+Accepted at **CVPR 2026**
+
+📄 Paper: https://arxiv.org/abs/2511.21331  
+🌐 Project Page: https://estafons.github.io/confu/  
+💻 Code: https://github.com/estafons/confu
+
+---
+
+## Repository Status
+
+⚠️ **This repository is currently under active development.**
+
+- Code and scripts are being cleaned and documented.
+- Additional utilities and configuration files will be added.
+- The **Bird-MML dataset link will be released soon**.
+
+---
+
+# Installation
 
 ## Prerequisites
 
@@ -66,7 +87,7 @@ data/
 ```
 
 
-## Experiments
+# Experiments
 
 ### MULTIBENCH
 
@@ -233,4 +254,15 @@ class ConFu(pl.LightningModule):
         loss = (l12 + l23 + l31 + lf12 + lf13 + lf23) / 6
 
         return loss
+```
+
+# Citation
+
+```bibtex
+@article{koutoupis2025more,
+  title={The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment},
+  author={Koutoupis, Stefanos and Zervou, Michaela Areti and Kontras, Konstantinos and De Vos, Maarten and Tsakalides, Panagiotis and Tsagatakis, Grigorios},
+  journal={arXiv preprint arXiv:2511.21331},
+  year={2025}
+}
 ```
