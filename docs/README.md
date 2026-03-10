@@ -45,10 +45,3 @@ Your page will be published at a URL like:
 ```text
 https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/
 ```
-
-## Things to update before publishing
-
-- Replace placeholder links in the hero buttons.
-- Add real figures into `assets/` and reference them from `index.html`.
-- Update the BibTeX entry when the proceedings version is public.
-- Add your official project thumbnail / social preview image.
