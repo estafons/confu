@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment</title>
+  <meta
+    name="description"
+    content="Project page for The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment."
+  />
+  <meta
+    property="og:title"
+    content="The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment"
+  />
+  <meta
+    property="og:description"
+    content="Project page for ConFu, a higher-order multimodal alignment framework."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/concept_image.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <section class="hero section">
+      <div class="container hero-inner">
+        <p class="venue">CVPR 2026</p>
+        <h1 class="title">The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment</h1>
+
+        <p class="authors">
+          Stefanos Koutoupis,&nbsp;
+          Michaela Areti Zervou,&nbsp;
+          Konstantinos Kontras,&nbsp;
+          Maarten De Vos,&nbsp;
+          Panagiotis Tsakalides,&nbsp;
+          Grigorios Tsagkatakis
+        </p>
+
+        <p class="affiliations">FORTH &middot; University of Crete &middot; KU Leuven</p>
+
+        <div class="button-row">
+          <a class="link-pill" href="#">Paper</a>
+          <a class="link-pill" href="https://arxiv.org/abs/2511.21331">arXiv</a>
+          <a class="link-pill" href="https://github.com/estafons/confu" target="_blank" rel="noopener">Code</a>
+          <a class="link-pill" href="#">Dataset</a>
+          <a class="link-pill" href="#results">Results</a>
+          <a class="link-pill" href="#bibtex">BibTeX</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section teaser-section">
+      <div class="container narrow">
+        <div class="teaser-card media-card">
+          <img
+            class="figure-image hero-image"
+            src="assets/concept_image.png"
+            alt="Concept figure illustrating why higher-order alignment is needed beyond pairwise objectives."
+          />
+          <p class="caption">
+            <strong>Conceptual overview.</strong> Pairwise alignment alone cannot recover interactions that only emerge jointly across modalities.
+            ConFu augments standard contrastive alignment with fused higher-order supervision, enabling the shared embedding space to preserve multimodal synergy.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container narrow">
+        <h2 class="section-title">Abstract</h2>
+        <div class="paper-block abstract-block">
+          <p>
+            Learning joint representations across multiple modalities remains a central challenge in multimodal machine learning.
+            Prevailing approaches predominantly operate in pairwise settings, aligning two modalities at a time.
+            In this work, we introduce <strong>Contrastive Fusion (ConFu)</strong>, a framework that jointly embeds both individual modalities
+            and their fused combinations into a unified representation space. ConFu extends traditional pairwise contrastive objectives with an
+            additional fused-modality contrastive term, encouraging the joint embedding of modality pairs with a third modality.
+            This formulation enables ConFu to capture higher-order dependencies, such as XOR-like relationships, that cannot be recovered through
+            pairwise alignment alone, while still maintaining strong pairwise correspondence.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section soft-section">
+      <div class="container">
+        <h2 class="section-title">Why higher-order alignment?</h2>
+        <div class="columns three">
+          <article class="paper-block info-card">
+            <h3>Pairwise alignment is incomplete</h3>
+            <p>
+              CLIP-style objectives align two modalities at a time. They are effective for standard cross-modal retrieval,
+              but they do not explicitly model information that only becomes predictive when several modalities are considered jointly.
+            </p>
+          </article>
+
+          <article class="paper-block info-card">
+            <h3>ConFu models multimodal synergy</h3>
+            <p>
+              ConFu builds fused representations from subsets of modalities and aligns them with the remaining modality,
+              injecting direct supervision on higher-order structure into the shared embedding space.
+            </p>
+          </article>
+
+          <article class="paper-block info-card">
+            <h3>Strong in both fused and standard settings</h3>
+            <p>
+              The method is not only useful when all modalities are present. It preserves strong single-modality usability while
+              supporting fused retrieval and classification, making it practical beyond synthetic higher-order toy tasks.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Method</h2>
+        <div class="method-layout">
+          <div class="paper-block method-text">
+            <h3>1. Pairwise contrastive alignment</h3>
+            <p>
+              Each modality is encoded and projected into a shared space. Conventional contrastive terms preserve direct correspondence
+              across ordered modality pairs.
+            </p>
+
+            <h3>2. Fusion branch for higher-order structure</h3>
+            <p>
+              A lightweight fusion module combines two modalities into a joint embedding and aligns that fused representation with the held-out modality.
+              This directly supervises interactions that cannot be recovered from pairwise terms alone.
+            </p>
+
+            <h3>3. Unified training objective</h3>
+            <p>
+              The final objective combines pairwise and fused higher-order terms. The resulting representation space remains usable for standard unimodal retrieval,
+              while also supporting fused two-to-one retrieval and classification.
+            </p>
+
+            <ul class="clean-list">
+              <li>Jointly embeds individual modalities and fused modality pairs</li>
+              <li>Captures XOR-like dependencies missed by purely pairwise objectives</li>
+              <li>Supports both 1-to-1 and 2-to-1 downstream evaluation</li>
+            </ul>
+          </div>
+
+          <div class="media-column">
+            <div class="media-card paper-block">
+              <img
+                class="figure-image tall-image"
+                src="assets/whole-arch.png"
+                alt="Architecture of ConFu showing modality encoders, projection heads, fusion branch, and the combined training objective."
+              />
+              <p class="caption">
+                <strong>ConFu architecture.</strong> Each modality is projected into a common embedding space while an additional fusion branch combines modality subsets.
+                Training jointly optimizes pairwise contrastive alignment and fused higher-order alignment, so the model retains strong unimodal utility while learning multimodal interactions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section">
+      <div class="container narrow">
+        <h2 class="section-title">Higher-order behavior in a controlled setting</h2>
+
+        <div class="paper-block media-card">
+          <img
+            class="figure-image medium-image"
+            src="assets/xor_with_geometric.png"
+            alt="XOR experiment showing the benefit of higher-order alignment as geometric interaction strength increases."
+          />
+          <p class="caption">
+            <strong>XOR with geometric structure.</strong> The controlled XOR setting illustrates the core
+            motivation behind ConFu. When the target depends on a genuinely joint interaction,
+            pairwise alignment is insufficient, while ConFu can exploit the higher-order signal.
+          </p>
+        </div>
+      </div>
+    </section>
+<section class="section soft-section">
+  <div class="container">
+    <h2 class="section-title">Bird-MML Dataset</h2>
+
+    <div class="paper-block birdmml-block">
+      <p>
+        Bird-MML is a multimodal dataset consisting of aligned bird images,
+        audio recordings, and textual descriptions. Each sample includes a bird
+        photograph, a mel-spectrogram derived from the corresponding audio
+        signal, and a short textual description capturing visual and acoustic
+        attributes. It is designed to test both ordinary cross-modal alignment and settings 
+        where several modalities together provide stronger evidence than any one alone.
+      </p>
+
+      <!-- Example 1 -->
+      <div class="dataset-example">
+        <div class="dataset-example-grid">
+          <div class="dataset-example-item">
+            <h4>Image</h4>
+            <img src="assets/01-haemorhous-mexicanus-image.png"
+                 alt="Haemorhous mexicanus image sample"/>
+          </div>
+
+          <div class="dataset-example-item">
+            <h4>Mel-Spectrogram</h4>
+            <img src="assets/01-haemorhous-mexicanus-spectrogram.png"
+                 alt="Haemorhous mexicanus mel-spectrogram sample"/>
+          </div>
+
+          <div class="dataset-example-item dataset-example-text">
+            <h4>Description</h4>
+            <p>
+              This red male house finch, with a distinctive black and white back
+              stripe, enjoys a meal from a wooden bird feeder.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example 2 -->
+      <div class="dataset-example">
+        <div class="dataset-example-grid">
+          <div class="dataset-example-item">
+            <h4>Image</h4>
+            <img src="assets/02-bubo-virginianus-image.png"
+                 alt="Bubo virginianus image sample"/>
+          </div>
+
+          <div class="dataset-example-item">
+            <h4>Mel-Spectrogram</h4>
+            <img src="assets/02-bubo-virginianus-spectrogram.png"
+                 alt="Bubo virginianus mel-spectrogram sample"/>
+          </div>
+
+          <div class="dataset-example-item dataset-example-text">
+            <h4>Description</h4>
+            <p>
+              This brown-bodied great horned owl sits perched on a branch,
+              its distinctive white throat patch and dark wings blending with the forest.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example 3 -->
+      <div class="dataset-example">
+        <div class="dataset-example-grid">
+          <div class="dataset-example-item">
+            <h4>Image</h4>
+            <img src="assets/03-melospiza-melodia-image.png"
+                 alt="Melospiza melodia image sample"/>
+          </div>
+
+          <div class="dataset-example-item">
+            <h4>Mel-Spectrogram</h4>
+            <img src="assets/03-melospiza-melodia-spectrogram.png"
+                 alt="Melospiza melodia mel-spectrogram sample"/>
+          </div>
+
+          <div class="dataset-example-item dataset-example-text">
+            <h4>Description</h4>
+            <p>
+              This brown song sparrow, with black and white stripes,
+              is a small common bird known for its distinctive song.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Licensing block -->
+      <div class="paper-block licensing-block">
+        <h3>Licensing and Attribution</h3>
+        <p>
+          The Bird-MML examples shown on this page retain their original source
+          licenses. Full licensing and attribution metadata for the displayed
+          samples is available in
+          <a href="assets/dataset_licenses.csv" target="_blank" rel="noopener">
+            this CSV file
+          </a>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+    <section id="results" class="section soft-section">
+      <div class="container">
+        <h2 class="section-title">Results snapshot</h2>
+        <div class="paper-block">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>SSW60 A</th>
+                  <th>SSW60 V</th>
+                  <th>SSW60 A+V</th>
+                  <th>VB100 A</th>
+                  <th>VB100 V</th>
+                  <th>VB100 A+V</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>CLIP</td>
+                  <td>29.9</td>
+                  <td>70.1</td>
+                  <td>&ndash;</td>
+                  <td>4.2</td>
+                  <td>20.6</td>
+                  <td>&ndash;</td>
+                </tr>
+                <tr>
+                  <td>Tri-CLIP</td>
+                  <td>31.1</td>
+                  <td>69.0</td>
+                  <td>&ndash;</td>
+                  <td>3.9</td>
+                  <td>20.7</td>
+                  <td>&ndash;</td>
+                </tr>
+                <tr>
+                  <td>Symile</td>
+                  <td>&ndash;</td>
+                  <td>&ndash;</td>
+                  <td>60.2</td>
+                  <td>&ndash;</td>
+                  <td>&ndash;</td>
+                  <td>13.4</td>
+                </tr>
+                <tr>
+                  <td>TRIANGLE</td>
+                  <td>&ndash;</td>
+                  <td>&ndash;</td>
+                  <td>64.1</td>
+                  <td>&ndash;</td>
+                  <td>&ndash;</td>
+                  <td>12.1</td>
+                </tr>
+                <tr>
+                  <td>GRAM</td>
+                  <td>0.7</td>
+                  <td>66.6</td>
+                  <td>56.9</td>
+                  <td>1.3</td>
+                  <td>13.7</td>
+                  <td>8.0</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td>ConFu</td>
+                  <td>30.3</td>
+                  <td>69.4</td>
+                  <td>71.44</td>
+                  <td>3.4</td>
+                  <td>19.3</td>
+                  <td>18.1</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="caption">
+            ConFu remains competitive on single-modality evaluation while substantially improving the fused A+V setting,
+            which is precisely where higher-order multimodal structure becomes useful.
+          </p>
+        </div>
+      </div>
+    </section>
+      
+
+    <section class="section soft-section">
+      <div class="container narrow">
+        <h2 class="section-title">Resources</h2>
+        <div class="paper-block">
+          <div class="resource-grid">
+            <a class="resource-card" href="#">Paper PDF</a>
+            <a class="resource-card" href="#">arXiv</a>
+            <a class="resource-card" href="https://github.com/estafons/confu" target="_blank" rel="noopener">Code</a>
+            <a class="resource-card" href="#">Bird-MML Dataset</a>
+            <a class="resource-card" href="#">Poster</a>
+            <a class="resource-card" href="assets/dataset_licenses.csv" target="_blank" rel="noopener">Licenses</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="bibtex" class="section">
+      <div class="container narrow">
+        <h2 class="section-title">BibTeX</h2>
+        <div class="paper-block">
+<pre><code>@inproceedings{koutoupis2026more,
+  title     = {The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment},
+  author    = {Koutoupis, Stefanos and Zervou, Michaela Areti and Kontras, Konstantinos and
+               De Vos, Maarten and Tsakalides, Panagiotis and Tsagkatakis, Grigorios},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year      = {2026}
+}</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
