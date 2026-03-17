@@ -13,11 +13,10 @@
 
 ## Repository Status
 
-⚠️ **This repository is currently under active development.**
+⚠️ **This repository is actively being updated.**
 
 - Code and scripts are being cleaned and documented.
-- Additional utilities and configuration files will be added.
-- The **Bird-MML dataset link will be released soon**.
+- ✅ The **Bird-MML dataset link will be released soon**.
 
 ---
 
