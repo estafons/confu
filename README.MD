@@ -1,13 +1,13 @@
 # The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment [CVPR 2026]
 
+[![arXiv](https://img.shields.io/badge/arXiv-2511.21331-b31b1b.svg)](https://arxiv.org/abs/2511.21331)
+[![Project Page](https://img.shields.io/badge/Project%20Page-Online-blue)](https://estafons.github.io/confu/)
+[![GitHub Code](https://img.shields.io/badge/Code-Repository-black)](https://github.com/estafons/confu)
+[![Dataset](https://img.shields.io/badge/Dataset-Download-green)](https://zenodo.org/records/18920487)
+
 <p align="center">
   <img src="assets/concept_image.png" width="600">
 </p>
-
-
-📄 Paper: https://arxiv.org/abs/2511.21331  
-🌐 Project Page: https://estafons.github.io/confu/  
-💻 Code: https://github.com/estafons/confu
 
 ---
 

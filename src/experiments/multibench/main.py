@@ -120,6 +120,8 @@ def run_fusion_clip2(cfg, loggers):
     val_labels_split1 = val_labels[:val_split]
     train_labels_split1 = train_labels[val_split:]
 
+    print(torch.allclose(femb13_t, test_emb2))
+    print((femb13_t - test_emb2).abs().mean())
 
     accuracy_all_val = evaluate_linear_probe(train_feats=train_split1, train_labels=train_labels_split1, val_feats=val_split1, val_labels=val_labels_split1, test_feats=all_val, test_labels=val_labels)
    # effective_rank_combined = effective_rank(all_test.numpy())
