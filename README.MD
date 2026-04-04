@@ -267,7 +267,7 @@ Experiments were repeated for **5 runs**, and the **mean** and **standard deviat
 ```bibtex
 @article{koutoupis2025more,
   title={The More, the Merrier: Contrastive Fusion for Higher-Order Multimodal Alignment},
-  author={Koutoupis, Stefanos and Zervou, Michaela Areti and Kontras, Konstantinos and De Vos, Maarten and Tsakalides, Panagiotis and Tsagatakis, Grigorios},
+  author={Koutoupis, Stefanos and Zervou, Michaela Areti and Kontras, Konstantinos and De Vos, Maarten and Tsakalides, Panagiotis and Tsagkatakis, Grigorios},
   journal={arXiv preprint arXiv:2511.21331},
   year={2025}
 }
