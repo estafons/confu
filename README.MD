@@ -253,7 +253,7 @@ Experiments were repeated for **5 runs**, and the **mean** and **standard deviat
 2. **Download the evaluation datasets:**  
    - SSW60: https://github.com/visipedia/ssw60  
    - VB100: https://arma.sourceforge.net/vb100/
-3. **Download a pretrained model**, or download the training data and **train the model** yourself.
+3. **Download the training data and **train the model** yourself.
 4. **Configure the data and model paths** in `configs/birds.yaml`.
 5. **Run the training and evaluation scripts:**
    ```bash
